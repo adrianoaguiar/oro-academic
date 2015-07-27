@@ -48,9 +48,9 @@ class OroIssueBundleInstaller implements Installation
             $table->addColumn('summary', 'string', ['length' => 255]);
             $table->addColumn('code', 'string', ['length' => 30]);
             $table->addColumn('description', 'text', []);
-            $table->addColumn('createdAt', 'datetime', []);
-            $table->addColumn('updatedAt', 'datetime', []);
-            $table->addColumn('issue_type', 'string', ['length' => 255]);
+            $table->addColumn('created_at', 'datetime', []);
+            $table->addColumn('updated_at', 'datetime', []);
+            $table->addColumn('type', 'string', ['length' => 255]);
             $table->setPrimaryKey(['id']);
             $table->addIndex(['priority_name'], 'IDX_DF0F9E3B965BD3DF', []);
             $table->addIndex(['reporter_id'], 'IDX_DF0F9E3BE1CFE6F5', []);
