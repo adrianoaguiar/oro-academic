@@ -1,7 +1,5 @@
 parameters:
-#    oro_issue.example.class: Oro\Bundle\IssueBundle\Example
+    oro_issue.entity.issue.class: Oro\Bundle\IssueBundle\Entity\Issue
 
 services:
-#    oro_issue.example:
-#        class: %oro_issue.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
+

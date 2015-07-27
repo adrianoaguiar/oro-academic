@@ -1,3 +1,4 @@
-oro_issue_homepage:
-    path:     /hello/{name}
-    defaults: { _controller: OroIssueBundle:Default:index }
+oro_issue_bundle:
+    resource: "@OroIssueBundle/Controller/IssueController.php"
+    type: annotation
+    prefix: /issue
