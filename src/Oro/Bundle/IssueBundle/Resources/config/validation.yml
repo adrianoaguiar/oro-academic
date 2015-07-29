@@ -1,0 +1,19 @@
+Oro\Bundle\IssueBundle\Entity\Issue:
+    properties:
+        summary:
+            - NotBlank: ~
+            - Length:
+                max: 255
+        code:
+            - NotBlank: ~
+            - Length:
+                max: 30
+        priority:
+            - NotBlank: ~
+        type:
+            - NotBlank: ~
+        reporter:
+            - NotBlank: ~
+        assignee:
+            - NotBlank: ~
+

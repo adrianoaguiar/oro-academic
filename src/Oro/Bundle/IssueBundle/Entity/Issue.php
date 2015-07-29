@@ -3,7 +3,7 @@
 namespace Oro\Bundle\IssueBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Oro\Bundle\UserBundle\Entity;
+use Oro\Bundle\UserBundle\Entity\User;
 use Doctrine\ORM\Mapping as ORM;
 use Oro\Bundle\EntityConfigBundle\Metadata\Annotation\Config;
 
@@ -11,6 +11,7 @@ use Oro\Bundle\EntityConfigBundle\Metadata\Annotation\Config;
  * Issue
  *
  * @ORM\Table(name="oro_issue")
+ * @ORM\HasLifecycleCallbacks()
  * @ORM\Entity(repositoryClass="Oro\Bundle\IssueBundle\Entity\IssueRepository")
  * @Config(
  *      routeName="oro_issue_index",
@@ -412,5 +413,22 @@ class Issue
     public function getPriority()
     {
         return $this->priority;
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function prePersist()
+    {
+        $this->createdAt = new \DateTime('now', new \DateTimeZone('UTC'));
+        $this->updatedAt = new \DateTime('now', new \DateTimeZone('UTC'));
+    }
+
+    /**
+     * @ORM\PreUpdate
+     */
+    public function preUpdate()
+    {
+        $this->updatedAt = new \DateTime('now', new \DateTimeZone('UTC'));
     }
 }
