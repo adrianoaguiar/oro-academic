@@ -5,12 +5,26 @@ namespace Oro\Bundle\IssueBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Oro\Bundle\UserBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
+use Oro\Bundle\EntityConfigBundle\Metadata\Annotation\Config;
 
 /**
  * Issue
  *
  * @ORM\Table(name="oro_issue")
  * @ORM\Entity(repositoryClass="Oro\Bundle\IssueBundle\Entity\IssueRepository")
+ * @Config(
+ *      routeName="oro_issue_index",
+ *      routeView="oro_issue_view",
+ *      defaultValues={
+ *          "entity"={
+ *              "icon"="icon-list-alt"
+ *          },
+ *          "security"={
+ *              "type"="ACL",
+ *              "group_name"=""
+ *          }
+ *      }
+ * )
  */
 class Issue
 {

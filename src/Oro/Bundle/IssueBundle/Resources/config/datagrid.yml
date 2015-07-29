@@ -1,0 +1,111 @@
+datagrid:
+    issue-grid:
+        source:
+            type: orm
+#            acl_resource: oro_issue_view
+            query:
+                select:
+                    - issue.id
+                    - issue.code
+                    - issue.summary
+                    - issue.type
+                    - priority.label as priorityLabel
+                    - reporter.id as reporterId
+                    - CONCAT(reporter.firstName, CONCAT(' ', reporter.lastName)) as reporterName
+                    - assignee.id as assigneeId
+                    - CONCAT(assignee.firstName, CONCAT(' ', assignee.lastName)) as assigneeName
+                    - issue.createdAt
+                    - issue.updatedAt
+                from:
+                    - { table: %oro_issue.entity.issue.class%, alias: issue }
+                join:
+                    left:
+                        - { join: issue.priority, alias: priority }
+                        - { join: issue.assignee, alias: assignee }
+                        - { join: issue.reporter, alias: reporter }
+        columns:
+            code:
+                label: oro.issue.grid.code.label
+            summary:
+                label: oro.issue.grid.summary.label
+            type:
+                label: oro.issue.grid.type.label
+            priorityLabel:
+                label: oro.issue.grid.priority.label
+            reporterName:
+                label: oro.issue.grid.reporter.label
+                type: twig
+                frontend_type: html
+                template: OroIssueBundle:Issue:Datagrid/Property/reporter.html.twig
+            assigneeName:
+                label: oro.issue.grid.assignee.label
+                type:  twig
+                frontend_type: html
+                template: OroIssueBundle:Issue:Datagrid/Property/assignee.html.twig
+            createdAt:
+                label: oro.ui.created_at
+                frontend_type: datetime
+            updatedAt:
+                label: oro.ui.updated_at
+                frontend_type: datetime
+        properties:
+            id: ~
+            view_link:
+                type:       url
+                route:      oro_issue_view
+                params:     [ id ]
+            update_link:
+                type:       url
+                route:      oro_issue_update
+                params:     [ id ]
+            delete_link:
+                type:       url
+                route:      oro_issue_delete
+                params:     [ id ]
+        actions:
+            view:
+                type:          navigate
+#                acl_resource:  oro_issue_view
+                label:         oro.grid.action.view
+                icon:          eye-open
+                link:          view_link
+                rowAction:     true
+            update:
+                type:          navigate
+#                acl_resource:  oro_issue_create
+                label:         oro.grid.action.update
+                icon:          edit
+                link:          update_link
+                rowAction:     true
+            delete:
+                type:          delete
+#                acl_resource:  oro_issue_delete
+                label:         oro.grid.action.delete
+                icon:          trash
+                link:          delete_link
+                rowAction:     true
+        sorters:
+            columns:
+                summary:
+                    data_name: issue.summary
+                code:
+                    data_name: issue.code
+                priorityLabel:
+                    data_name: priorityLabel
+                createdAt:
+                    data_name: issue.createdAt
+                updatedAt:
+                    data_name: issue.updatedAt
+            default:
+                updatedAt: DESC
+        filters:
+            columns:
+                summary:
+                    type:      string
+                    data_name: issue.summary
+                createdAt:
+                    type:      datetime
+                    data_name: issue.createdAt
+                updatedAt:
+                    type:      datetime
+                    data_name: issue.updatedAt
