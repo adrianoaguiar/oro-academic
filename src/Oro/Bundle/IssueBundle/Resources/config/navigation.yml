@@ -1,15 +1,23 @@
 oro_menu_config:
     items:
         issues_tab:
-            label: 'oro.issue.menu.issues_tab.label'
+            label: 'oro.issue.entity_plural_label'
             uri: '#'
             extras:
-                position: 100
+                position: 200
+
         issue_list:
             label: 'oro.issue.list_label'
             route: 'oro_issue_index'
+            extras:
+                position: 50
+                routes: ['oro_issue_*']
 
     tree:
         application_menu:
             children:
-                issue_list: ~
+                issues_tab:
+                    children:
+                        issue_list: ~
+oro_titles:
+    oro_issue_index: Issues

@@ -8,8 +8,9 @@ datagrid:
                     - issue.id
                     - issue.code
                     - issue.summary
-                    - issue.type
+                    - CONCAT('oro.issue.grid.type.', issue.type) as type
                     - priority.label as priorityLabel
+                    - priority.priority as priorityWeight
                     - reporter.id as reporterId
                     - CONCAT(reporter.firstName, CONCAT(' ', reporter.lastName)) as reporterName
                     - assignee.id as assigneeId
@@ -30,6 +31,7 @@ datagrid:
                 label: oro.issue.grid.summary.label
             type:
                 label: oro.issue.grid.type.label
+                type: translatable
             priorityLabel:
                 label: oro.issue.grid.priority.label
             reporterName:
@@ -91,7 +93,7 @@ datagrid:
                 code:
                     data_name: issue.code
                 priorityLabel:
-                    data_name: priorityLabel
+                    data_name: priorityWeight
                 createdAt:
                     data_name: issue.createdAt
                 updatedAt:

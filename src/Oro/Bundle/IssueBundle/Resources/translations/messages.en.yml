@@ -1,12 +1,23 @@
 oro:
     issue:
         list_label: Issues List
+        entity_label: Issue
         entity_plural_label: Issues
+        controller:
+            notfound.message: Issue item is not found.
+            deleted.message: Issue has been successfully deleted.
+            saved.message: Issue has been successfully saved.
         grid:
             create: "Create New Issue"
             code.label: "Code"
             summary.label: "Summary"
-            type.label: "Type"
             priority.label: "Priority"
             reporter.label: "Reporter"
             assignee.label: "Assignee"
+            description.label: "Description"
+            type:
+                label: Type
+                task: Task
+                story: Story
+                subtask: Subtask
+                bug: Bug
