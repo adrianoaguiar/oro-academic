@@ -24,6 +24,10 @@ Oro\Bundle\IssueBundle\Entity\Issue:
             target_type:            text
             target_fields:          [priority]
         -
+            name:                   resolution
+            target_type:            text
+            target_fields:          [resolution]
+        -
             name:                   assignee
             relation_type:          many-to-one
             relation_fields:
