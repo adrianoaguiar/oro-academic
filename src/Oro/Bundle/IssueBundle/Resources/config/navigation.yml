@@ -12,6 +12,16 @@ oro_menu_config:
             extras:
                 position: 50
                 routes: ['oro_issue_*']
+        shortcut_issue_create:
+            label: Create new issue
+            route: oro_issue_create
+            extras:
+                description: Create new issue
+        shortcut_issue_list:
+            label: Show issues list
+            route: oro_issue_index
+            extras:
+                description: List of issues
 
     tree:
         application_menu:
@@ -19,5 +29,13 @@ oro_menu_config:
                 issues_tab:
                     children:
                         issue_list: ~
+
+        shortcuts:
+            children:
+                shortcut_issue_create: ~
+                shortcut_issue_list: ~
 oro_titles:
     oro_issue_index: Issues
+    oro_issue_view: %%entity.title%%
+    oro_issue_create: Create %%entityName%%
+    oro_issue_update: %%entity.title%% - Edit
