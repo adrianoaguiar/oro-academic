@@ -6,12 +6,14 @@ use Doctrine\DBAL\Schema\Schema;
 
 use Oro\Bundle\MigrationBundle\Migration\Installation;
 use Oro\Bundle\MigrationBundle\Migration\QueryBag;
+use Oro\Bundle\NoteBundle\Migration\Extension\NoteExtension;
+use Oro\Bundle\NoteBundle\Migration\Extension\NoteExtensionAwareInterface;
 
 /**
  * Class OroIssueBundleInstaller
  * @package Oro\Bundle\IssueBundle\Migrations\Schema
  */
-class OroIssueBundleInstaller implements Installation
+class OroIssueBundleInstaller implements Installation, NoteExtensionAwareInterface
 {
     /**
      * {@inheritdoc}
@@ -19,6 +21,17 @@ class OroIssueBundleInstaller implements Installation
     public function getMigrationVersion()
     {
         return 'v1_0';
+    }
+
+    /** @var NoteExtension */
+    protected $noteExtension;
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setNoteExtension(NoteExtension $noteExtension)
+    {
+        $this->noteExtension = $noteExtension;
     }
 
     /**
@@ -31,6 +44,8 @@ class OroIssueBundleInstaller implements Installation
         $this->createOroIssuePriorityTable($schema);
         $this->createOroIssueResolutionTable($schema);
         $this->createOroIssueCollaboratorsTable($schema);
+
+        $this->noteExtension->addNoteAssociation($schema, 'oro_issue');
     }
 
     /**

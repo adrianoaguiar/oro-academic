@@ -4,6 +4,7 @@ parameters:
     oro_issue.form.handler.issue.class: Oro\Bundle\IssueBundle\Form\Handler\IssueHandler
     oro_issue.manager.api.class: Oro\Bundle\SoapBundle\Entity\Manager\ApiEntityManager
     oro_issue.issue_listener.class: Oro\Bundle\IssueBundle\EventListener\IssueListener
+    oro_issue.note_listener.class: Oro\Bundle\IssueBundle\EventListener\NoteListener
 
 services:
     oro_issue.form.type.issue:
@@ -41,3 +42,8 @@ services:
         tags:
             - { name: doctrine.event_listener, event: postPersist}
             - { name: doctrine.event_listener, event: onFlush}
+
+    oro_issue.note_listener:
+        class: %oro_issue.note_listener.class%
+        tags:
+            - { name: doctrine.event_listener, event: prePersist }
