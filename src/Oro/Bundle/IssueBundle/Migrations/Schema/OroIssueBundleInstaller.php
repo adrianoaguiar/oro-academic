@@ -29,6 +29,7 @@ class OroIssueBundleInstaller implements Installation
         /** Tables generation **/
         $this->createOroIssueTable($schema);
         $this->createOroIssuePriorityTable($schema);
+        $this->createOroIssueResolutionTable($schema);
     }
 
     /**
@@ -43,7 +44,7 @@ class OroIssueBundleInstaller implements Installation
             $table->addColumn('id', 'integer', ['autoincrement' => true]);
             $table->addColumn('parent_id', 'integer', ['notnull' => false]);
             $table->addColumn('assignee_id', 'integer', ['notnull' => false]);
-            $table->addColumn('priority_name', 'string', ['notnull' => false, 'length' => 32]);
+            $table->addColumn('priority_name', 'string', ['notnull' => false, 'length' => 255]);
             $table->addColumn('reporter_id', 'integer', ['notnull' => false]);
             $table->addColumn('summary', 'string', ['length' => 255]);
             $table->addColumn('code', 'string', ['length' => 30]);
@@ -51,11 +52,14 @@ class OroIssueBundleInstaller implements Installation
             $table->addColumn('created_at', 'datetime', []);
             $table->addColumn('updated_at', 'datetime', []);
             $table->addColumn('type', 'string', ['length' => 255]);
+            $table->addColumn('resolution_name', 'string', ['notnull' => false, 'length' => 32]);
+
             $table->setPrimaryKey(['id']);
             $table->addIndex(['priority_name'], 'IDX_DF0F9E3B965BD3DF', []);
             $table->addIndex(['reporter_id'], 'IDX_DF0F9E3BE1CFE6F5', []);
             $table->addIndex(['assignee_id'], 'IDX_DF0F9E3B59EC7D60', []);
             $table->addIndex(['parent_id'], 'IDX_DF0F9E3B727ACA70', []);
+            $table->addIndex(['resolution_name'], 'IDX_DF0F9E3B8EEEA2E1', []);
 
             $table->addForeignKeyConstraint(
                 $schema->getTable('oro_issue'),
@@ -100,5 +104,27 @@ class OroIssueBundleInstaller implements Installation
                 ['onDelete' => 'SET NULL', 'onUpdate' => null]
             );
         }
+    }
+
+    /**
+     * Create oro_issue_resolution table
+     *
+     * @param Schema $schema
+     */
+    protected function createOroIssueResolutionTable(Schema $schema)
+    {
+        $table = $schema->createTable('oro_issue_resolution');
+        $table->addColumn('name', 'string', ['length' => 32]);
+        $table->addColumn('label', 'string', ['length' => 255]);
+        $table->addColumn('priority', 'integer', []);
+        $table->setPrimaryKey(['name']);
+        $table->addUniqueIndex(['label'], 'UNIQ_4A352091EA750E8');
+
+        $schema->getTable('oro_issue')->addForeignKeyConstraint(
+            $table,
+            ['resolution_name'],
+            ['name'],
+            ['onDelete' => 'SET NULL', 'onUpdate' => null]
+        );
     }
 }

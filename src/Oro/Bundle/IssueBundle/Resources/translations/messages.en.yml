@@ -3,6 +3,7 @@ oro:
         list_label: Issues List
         entity_label: Issue
         entity_plural_label: Issues
+        resolution.label: Resolution
         controller:
             notfound.message: Issue item is not found.
             deleted.message: Issue has been successfully deleted.
@@ -15,6 +16,7 @@ oro:
             reporter.label: "Reporter"
             assignee.label: "Assignee"
             description.label: "Description"
+            resolution.label: "Resolution"
             type:
                 label: Type
                 task: Task

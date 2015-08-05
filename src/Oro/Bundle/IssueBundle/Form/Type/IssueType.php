@@ -78,6 +78,18 @@ class IssueType extends AbstractType
                         return $repository->createQueryBuilder('priority')->orderBy('priority.priority');
                     }
                 ]
+            )
+            ->add(
+                'resolution',
+                'entity',
+                [
+                    'label'    => 'oro.issue.grid.resolution.label',
+                    'class'    => 'Oro\Bundle\IssueBundle\Entity\IssueResolution',
+                    'required' => true,
+                    'query_builder' => function (EntityRepository $repository) {
+                        return $repository->createQueryBuilder('resolution')->orderBy('resolution.priority');
+                    }
+                ]
             );
     }
 

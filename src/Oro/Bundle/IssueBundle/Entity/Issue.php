@@ -3,6 +3,7 @@
 namespace Oro\Bundle\IssueBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Oro\Bundle\IssueBundle\Model\ExtendIssue;
 use Oro\Bundle\UserBundle\Entity\User;
 use Doctrine\ORM\Mapping as ORM;
 use Oro\Bundle\EntityConfigBundle\Metadata\Annotation\Config;
@@ -20,6 +21,9 @@ use Oro\Bundle\EntityConfigBundle\Metadata\Annotation\Config;
  *          "entity"={
  *              "icon"="icon-list-alt"
  *          },
+ *          "workflow"={
+ *              "active_workflow"="oro_issue_workflow"
+ *          },
  *          "security"={
  *              "type"="ACL",
  *              "group_name"=""
@@ -27,7 +31,7 @@ use Oro\Bundle\EntityConfigBundle\Metadata\Annotation\Config;
  *      }
  * )
  */
-class Issue
+class Issue extends ExtendIssue
 {
     const TYPE_BUG     = 'bug';
     const TYPE_TASK    = 'task';
@@ -121,6 +125,14 @@ class Issue
      * @ORM\JoinColumn(name="priority_name", referencedColumnName="name", onDelete="SET NULL")
      */
     protected $priority;
+
+    /**
+     * @var IssueResolution
+     *
+     * @ORM\ManyToOne(targetEntity="IssueResolution")
+     * @ORM\JoinColumn(name="resolution_name", referencedColumnName="name", onDelete="SET NULL")
+     */
+    protected $resolution;
 
     /**
      * Get id
@@ -430,5 +442,24 @@ class Issue
     public function preUpdate()
     {
         $this->updatedAt = new \DateTime('now', new \DateTimeZone('UTC'));
+    }
+
+    /**
+     * @return IssueResolution
+     */
+    public function getResolution()
+    {
+        return $this->resolution;
+    }
+
+    /**
+     * @param IssueResolution $resolution
+     * @return Issue $this
+     */
+    public function setResolution($resolution)
+    {
+        $this->resolution = $resolution;
+
+        return $this;
     }
 }
