@@ -30,6 +30,7 @@ class OroIssueBundleInstaller implements Installation
         $this->createOroIssueTable($schema);
         $this->createOroIssuePriorityTable($schema);
         $this->createOroIssueResolutionTable($schema);
+        $this->createOroIssueCollaboratorsTable($schema);
     }
 
     /**
@@ -125,6 +126,34 @@ class OroIssueBundleInstaller implements Installation
             ['resolution_name'],
             ['name'],
             ['onDelete' => 'SET NULL', 'onUpdate' => null]
+        );
+    }
+
+    /**
+     * Create oro_issue_collaborators table
+     *
+     * @param Schema $schema
+     */
+    protected function createOroIssueCollaboratorsTable(Schema $schema)
+    {
+        $table = $schema->createTable('oro_issue_collaborators');
+        $table->addColumn('issue_id', 'integer', []);
+        $table->addColumn('user_id', 'integer', []);
+        $table->setPrimaryKey(['issue_id', 'user_id']);
+        $table->addIndex(['issue_id'], 'IDX_9DBAC525E7AA58C', []);
+        $table->addIndex(['user_id'], 'IDX_9DBAC52A76ED395', []);
+
+        $table->addForeignKeyConstraint(
+            $schema->getTable('oro_user'),
+            ['user_id'],
+            ['id'],
+            ['onDelete' => 'CASCADE', 'onUpdate' => null]
+        );
+        $table->addForeignKeyConstraint(
+            $schema->getTable('oro_issue'),
+            ['issue_id'],
+            ['id'],
+            ['onDelete' => 'CASCADE', 'onUpdate' => null]
         );
     }
 }

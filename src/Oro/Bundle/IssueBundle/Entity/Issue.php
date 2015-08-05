@@ -135,6 +135,17 @@ class Issue extends ExtendIssue
     protected $resolution;
 
     /**
+     * @var ArrayCollection User[]
+     *
+     * @ORM\ManyToMany(targetEntity="Oro\Bundle\UserBundle\Entity\User")
+     * @ORM\JoinTable(name="oro_issue_collaborators",
+     *      joinColumns={@ORM\JoinColumn(name="issue_id", referencedColumnName="id", onDelete="CASCADE")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id", onDelete="CASCADE")}
+     * )
+     */
+    protected $collaborators;
+
+    /**
      * Get id
      *
      * @return integer 
@@ -333,6 +344,7 @@ class Issue extends ExtendIssue
     public function __construct()
     {
         $this->children = new ArrayCollection();
+        $this->collaborators = new ArrayCollection();
     }
 
     /**
@@ -459,6 +471,42 @@ class Issue extends ExtendIssue
     public function setResolution($resolution)
     {
         $this->resolution = $resolution;
+
+        return $this;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getCollaborators()
+    {
+        return $this->collaborators;
+    }
+
+    /**
+     * @param User $user
+     *
+     * @return Issue
+     */
+    public function addCollaborator(User $user)
+    {
+        if (!$this->getCollaborators()->contains($user)) {
+            $this->getCollaborators()->add($user);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param User $user
+     *
+     * @return Issue
+     */
+    public function removeCollaborator(User $user)
+    {
+        if (!$this->getCollaborators()->contains($user)) {
+            $this->getCollaborators()->removeElement($user);
+        }
 
         return $this;
     }
