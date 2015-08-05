@@ -3,6 +3,7 @@ parameters:
     oro_issue.form.type.issue.class: Oro\Bundle\IssueBundle\Form\Type\IssueType
     oro_issue.form.handler.issue.class: Oro\Bundle\IssueBundle\Form\Handler\IssueHandler
     oro_issue.manager.api.class: Oro\Bundle\SoapBundle\Entity\Manager\ApiEntityManager
+    oro_issue.issue_listener.class: Oro\Bundle\IssueBundle\EventListener\IssueListener
 
 services:
     oro_issue.form.type.issue:
@@ -32,3 +33,11 @@ services:
         arguments:
             - %oro_issue.entity.issue.class%
             - @doctrine.orm.entity_manager
+
+    oro_issue.issue_listener:
+        class: %oro_issue.issue_listener.class%
+        arguments:
+            - @oro_entity_config.link.security_context
+        tags:
+            - { name: doctrine.event_listener, event: postPersist}
+            - { name: doctrine.event_listener, event: onFlush}

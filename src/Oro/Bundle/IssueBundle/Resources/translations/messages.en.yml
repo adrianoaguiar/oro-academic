@@ -23,3 +23,5 @@ oro:
                 story: Story
                 subtask: Subtask
                 bug: Bug
+        message:
+            no_collaborators: There are no collaborators.
