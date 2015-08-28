@@ -1,0 +1,22 @@
+{% import 'OroUIBundle::macros.html.twig' as UI %}
+
+{{ UI.clientButton({
+    'dataUrl': path('oro_issue_create', { 'userId': entity.id }) ,
+    'aCss': 'no-hash',
+    'label' : 'oro.issue.add_entity'|trans,
+    'widget' : {
+        'type' : 'dialog',
+        'multiple' : false,
+        'reload-grid-name' : 'user-issues-grid',
+        'options' : {
+            'dialogOptions' : {
+                'title' : 'oro.issue.add_entity'|trans,
+                'allowMaximize': true,
+                'allowMinimize': true,
+                'dblclick': 'maximize',
+                'maximizedHeightDecreaseBy': 'minimize-bar',
+                'width': 600
+            }
+        }
+    },
+}) }}

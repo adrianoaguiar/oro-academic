@@ -115,3 +115,13 @@ datagrid:
                 updatedAt:
                     type:      datetime
                     data_name: issue.updatedAt
+
+    user-issues-grid:
+        extends: issue-grid
+        source:
+            query:
+                where:
+                    and:
+                        - (assignee.id = :id OR reporter.id = :id)
+            bind_parameters:
+                - id

@@ -54,6 +54,7 @@ class IssueController extends Controller
                 throw new NotFoundHttpException(sprintf('User with ID %s is not found', $user));
             }
             $entity->setReporter($user);
+            $entity->setAssignee($user);
         } elseif ($reporter = $this->getUser()) {
             $entity->setReporter($reporter);
         }

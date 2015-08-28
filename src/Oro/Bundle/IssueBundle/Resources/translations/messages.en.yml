@@ -4,6 +4,7 @@ oro:
         entity_label: Issue
         entity_plural_label: Issues
         resolution.label: Resolution
+        add_entity: Create Issue
         controller:
             notfound.message: Issue item is not found.
             deleted.message: Issue has been successfully deleted.
